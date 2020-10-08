@@ -62,4 +62,5 @@ int main()
     int max_sum = find_max_subarray(A, 0, n - 1);
     printf("Maximum subArray sum is %d", max_sum);
     getchar();
+    return 0;
 }
