@@ -34,7 +34,7 @@ int main()
             break;
         }
 
-        case 'c': //calendário
+        case 'C': //calendário
         {
             int x = vfork();
             if (x == 0)
@@ -49,11 +49,28 @@ int main()
             int x = vfork();
             if (x == 0)
             {
-                execlp("/bin/ls", "ls", NULL);
+                execlp("/bin/ls", "ls", "-h", NULL);
             }
             break;
         }
-
+        case 'i': //ip access
+        {
+            int x = vfork();
+            if (x == 0)
+            {
+                execlp("/bin/ip", "ip", "a", NULL);
+            }
+            break;
+        }
+        case 'c': //clear
+        {
+            int x = vfork();
+            if (x == 0)
+            {
+                execlp("/usr/bin/clear", "clear", NULL);
+            }
+            break;
+        }
         default:
             wait(NULL);
             break;
