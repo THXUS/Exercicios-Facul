@@ -20,26 +20,26 @@ int main()
     op = menu();
     while (op != 'e') //exit
     {
-        cout << "Processo Pai: " << getpid() << "\n";
+        //cout << "Processo Pai: " << getpid() << "\n";
         int x = vfork();
         if (x == 0)
         {
-            cout << "Processo Filho: " << getpid() << "\n";
+            //cout << "Processo Filho: " << getpid() << "\n";
             switch (op)
             {
-            case 'd':
+            case 'd': //comando df
                 execlp("/bin/df", "df", NULL);
                 break;
-            case 'i':
+            case 'i': //comando ip access
                 execlp("/bin/ip", "ip", "a", NULL);
                 break;
-            case 'l':
+            case 'l': //comando ls
                 execlp("/bin/ls", "ls", "-h", NULL);
                 break;
-            case 'c':
+            case 'c': //comando clear
                 execlp("/usr/bin/clear", "clear", NULL);
                 break;
-            case 'p':
+            case 'p': //comando pwd
                 execlp("/bin/pwd", "pwd", NULL);
                 break;
             }
@@ -47,7 +47,7 @@ int main()
         else
         {
             wait(NULL);
-            cout << "Processo pai: " << getpid() << "\n";
+            //cout << "Processo pai: " << getpid() << "\n";
         }
         op = menu();
     }
