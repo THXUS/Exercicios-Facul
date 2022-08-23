@@ -33,7 +33,7 @@ void display(void) {
     int m =  (20 - 100) / (100 - 20);
     for(int i = 20; i < 100; i++ ) {
         glPointSize(3);
-        int y = m * i + 20;
+        int y = -m * i + 20;
         glBegin(GL_POINTS);
         glVertex2i(i, y);
         glEnd();
