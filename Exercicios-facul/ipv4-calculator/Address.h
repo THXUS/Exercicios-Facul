@@ -29,7 +29,9 @@ class Address {
         void setMask(string mask[4]);
         double getNumberOfHosts(int cidr);
         vector<int> getFirstAddress();
-        vector<int> getLastAddress();
+        vector<int> getBroadcast();
+        vector<int> getFirstIp(vector<int> firstAddress);
+        vector<int> getLastIp(vector<int> broadcast);
 };
 
 

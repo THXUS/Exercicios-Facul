@@ -118,7 +118,7 @@ vector<int> Address::getFirstAddress() {
     return firstAddress;
 }
 
-vector<int> Address::getLastAddress() {
+vector<int> Address::getBroadcast() {
     
     vector<int> lastAddress;
 
@@ -136,4 +136,30 @@ vector<int> Address::getLastAddress() {
     }
 
     return lastAddress;
+}
+
+vector<int> Address::getFirstIp(vector<int> firstAddress) {
+
+    vector<int> firstIp = firstAddress;
+
+    int lastOctect = * --firstIp.end();
+
+    firstIp.pop_back();
+
+    firstIp.push_back(++lastOctect);
+
+    return firstIp;
+}
+
+vector<int> Address::getLastIp(vector<int> broadcast) {
+
+    vector<int> lastIp = broadcast;
+
+    int lastOctect = * --lastIp.end();
+    
+    lastIp.pop_back();
+
+    lastIp.push_back(--lastOctect);
+
+    return lastIp;
 }
