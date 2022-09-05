@@ -78,18 +78,34 @@ int main() {
             cout << *i << ".";
         }
 
-        vector<int> lastAddress = address.getLastAddress();
+        vector<int> broadcast = address.getBroadcast();
 
         cout << "\n";
 
-        cout << "Last Address: ";
+        cout << "Broadcast: ";
 
-        for ( auto i = lastAddress.begin(); i != lastAddress.end(); ++i) {
+        for ( auto i = broadcast.begin(); i != broadcast.end(); ++i) {
             cout << *i << ".";
         }
 
         cout <<"\n";
 
+        cout << "First IP: ";
+
+        vector<int> firstIp = address.getFirstIp(firstAddress);
+
+        for( auto i = firstIp.begin(); i != firstIp.end(); ++i ) {
+            cout << *i <<".";
+        }
+        cout << "\n";
+
+        cout << "Last IP: ";
+
+        vector<int> lastIp = address.getLastIp(broadcast);
+
+        for( auto i = lastIp.begin(); i != lastIp.end(); ++i) {
+            cout << *i << ".";
+        }
 
     } else {
         cout << "is Invalid\n";
