@@ -68,7 +68,7 @@ void calculateClassIP() {
 
     string input;
     
-    cout<< "Type something bruh... ";
+    cout<< "Type something bruh (n.n.n.n)... ";
     
     cin >> input;
 
@@ -142,7 +142,7 @@ void calculateClasslessIP() {
     
     Address address;
 
-    cout << "Enter your ip bruh... ";
+    cout << "Enter your ip bruh (n.n.n.n)... ";
     cin >> ipCode;
 
     bool isValid = address.checkCode(ipCode);
@@ -153,7 +153,7 @@ void calculateClasslessIP() {
 
         string inputMask;
 
-        cout << "Enter your mask bruh.. ";
+        cout << "Enter your mask bruh (n.n.n.n)... ";
         cin >> inputMask;
 
         bool isValidMask = address.isValidDecimalMask(inputMask);
@@ -214,7 +214,7 @@ void calculateClasslessIpWithCidr() {
     
     Address address;
 
-    cout << "Enter your ip bruh... ";
+    cout << "Enter your ip bruh (n.n.n.n)... ";
     cin >> ipCode;
 
     bool isValid = address.checkCode(ipCode);
