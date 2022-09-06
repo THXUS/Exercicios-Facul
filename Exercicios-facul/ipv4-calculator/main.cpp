@@ -40,8 +40,8 @@ int printScreen( ) {
     cout << "\n";
     cout << "Options:                                                  " << "\n";
     cout << "1 - Calculate Class IP                                    " << "\n";
-    cout << "2 - Calculate Classless IP with CIDR                      " << "\n";
-    cout << "3 - Calculate Classless IP with Decimal Notation          " << "\n";
+    cout << "2 - Calculate Classless IP with Decimal Notation          " << "\n";
+    cout << "3 - Calculate Classless IP with CIDR                      " << "\n";
     cout << "4 - Exit                                                  " << "\n";
     cout << "Enter your option: ";
     cin >> option;
@@ -77,13 +77,17 @@ void calculateClassIP() {
 
         address.setOctects(octects);
 
-        address.checkClass();
+        string uai = address.checkClass();
+
+        cout << "Class: " << uai << "\n";
+ 
+        if(uai  != "D" && uai != "E") {
+
+        string mask = address.checkMask();
 
         int cidr = address.getCIDR();
 
-        cout << "/" << cidr << endl;
-
-        string mask = address.checkMask();
+        cout << "CIDR: /" << cidr << endl;
 
         cout << "Mask: " << mask << "\n";
 
@@ -99,37 +103,25 @@ void calculateClassIP() {
 
         cout << "First Address: ";
 
-        for ( auto i = firstAddress.begin(); i != firstAddress.end(); ++i) {
-            cout << *i << ".";
-        }
+        printIp(firstAddress);
 
         vector<int> broadcast = address.getBroadcast();
 
-        cout << "\n";
-
         cout << "Broadcast: ";
 
-        for ( auto i = broadcast.begin(); i != broadcast.end(); ++i) {
-            cout << *i << ".";
-        }
-
-        cout <<"\n";
+        printIp(broadcast);
 
         cout << "First IP: ";
 
         vector<int> firstIp = address.getFirstIp(firstAddress);
 
-        for( auto i = firstIp.begin(); i != firstIp.end(); ++i ) {
-            cout << *i <<".";
-        }
-        cout << "\n";
+        printIp(firstIp);
 
         cout << "Last IP: ";
 
         vector<int> lastIp = address.getLastIp(broadcast);
 
-        for( auto i = lastIp.begin(); i != lastIp.end(); ++i) {
-            cout << *i << ".";
+        printIp(lastIp);
         }
 
     } else {

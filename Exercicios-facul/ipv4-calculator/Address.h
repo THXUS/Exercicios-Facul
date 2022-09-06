@@ -22,7 +22,7 @@ class Address {
         void setAddressCode(string code);
         bool checkCode(string code);
         string getAddressCode();
-        void checkClass();
+        string checkClass();
         void setOctects(string octects[4]);
         int getCIDR();
         string checkMask();
