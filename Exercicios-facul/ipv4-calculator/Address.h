@@ -32,6 +32,8 @@ class Address {
         vector<int> getBroadcast();
         vector<int> getFirstIp(vector<int> firstAddress);
         vector<int> getLastIp(vector<int> broadcast);
+        bool isValidDecimalMask(string mask);
+        int getClasslessCIDR(string mask);
 };
 
 

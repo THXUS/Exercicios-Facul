@@ -3,6 +3,8 @@
 #include <cstdint>
 #include <bitset>
 
+#include "ValidMasks.h"
+
 
 const string Address::addressPattern = "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
 
@@ -162,4 +164,12 @@ vector<int> Address::getLastIp(vector<int> broadcast) {
     lastIp.push_back(--lastOctect);
 
     return lastIp;
+}
+
+bool Address::isValidDecimalMask(string mask) {
+    return find(validMasks.begin(), validMasks.end(),mask) != validMasks.end();
+}
+
+int Address::getClasslessCIDR(string mask) {
+    return (find(validMasks.begin(), validMasks.end(),mask) - validMasks.begin()) + 8; 
 }

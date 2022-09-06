@@ -2,7 +2,6 @@
 #include "Address.h"
 #include "Address.cpp"
 #include <vector>
-#include "validMasks.h"
 string octects[4];
 string maskOctects[4];
   
@@ -48,6 +47,13 @@ int printScreen( ) {
     cin >> option;
 
     return option;
+}
+
+void printIp(vector<int> ip) {
+    for( auto i = ip.begin(); i != ip.end(); ++ i) {
+        cout << *i <<".";
+    }
+    cout << "\n";
 }
 
 void calculateClassIP() {
@@ -137,12 +143,65 @@ void calculateClasslessIP() {
     
     Address address;
 
-    cout << "Enter yout ip bruh... " << "\n";
+    cout << "Enter your ip bruh... ";
     cin >> ipCode;
 
     bool isValid = address.checkCode(ipCode);
 
     if(isValid) {
+
+        address.setAddressCode(ipCode);
+
+        string inputMask;
+
+        cout << "Enter your mask bruh.. ";
+        cin >> inputMask;
+
+        bool isValidMask = address.isValidDecimalMask(inputMask);
+
+         if(isValidMask) {
+
+            split(address.getAddressCode(), '.', octects);
+
+            address.setOctects(octects);
+
+            split(inputMask,'.',maskOctects );
+
+            address.setMask(maskOctects);
+
+            cout << "your ip Address " << address.getAddressCode() << "\n";
+
+            cout << "your decimal mask " << inputMask << "\n";
+
+            int classlessCidr =  address.getClasslessCIDR(inputMask);
+
+            cout << "Your cidr is /" << classlessCidr << "\n";
+
+            cout << "Your number of hosts: " << address.getNumberOfHosts(classlessCidr) << "\n";
+
+            vector<int> firstAddress = address.getFirstAddress();
+
+            cout << "Your first Address is ";
+
+            printIp(firstAddress);
+
+            cout << "Your broadcast is ";
+
+            vector<int> broadcast = address.getBroadcast();
+
+            printIp(broadcast);
+
+            cout << "your first ip ";
+
+            printIp(address.getFirstIp(firstAddress));
+
+            cout << "your last ip ";
+
+            printIp(address.getLastIp(broadcast));
+
+         } else {
+            cout << "your mask is invalid bruh :(" << "\n";
+         }
 
     }else {
         cout << "Oopsie, sorry its invalid :(" << "\n";
@@ -167,6 +226,7 @@ int main() {
         calculateClassIP();
         break;
         case 2:
+        calculateClasslessIP();
         break;
         case 3:
         break;
