@@ -5,7 +5,7 @@
 #include <vector>
 
 
-
+//mascaras validas de /8 a /30
 std::vector<std::string> validMasks = {
     "255.0.0.0", 
     "255.128.0.0",

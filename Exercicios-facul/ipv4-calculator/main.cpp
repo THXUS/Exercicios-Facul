@@ -4,7 +4,9 @@
 #include <vector>
 string octects[4];
 string maskOctects[4];
-  
+
+
+// rotina para pegar o tamanho de uma string
 int len(string str) {  
     int length = 0;  
     for (int i = 0; str[i] != '\0'; i++)  
@@ -14,7 +16,8 @@ int len(string str) {
     }  
     return length;     
 }  
-  
+
+// rotina para fazer separar um input em um objeto vector  
 void split (string str, char seperator, string *arr) {  
     int currIndex = 0, i = 0;  
     int startIndex = 0, endIndex = 0;  
@@ -31,6 +34,7 @@ void split (string str, char seperator, string *arr) {
     }     
 }
 
+//menu de opcoes
 int printScreen( ) {
 
     int option;
@@ -49,6 +53,7 @@ int printScreen( ) {
     return option;
 }
 
+//rotina para imprimir vectors na forma (n.n.n.n.)
 void printIp(vector<int> ip) {
     for( auto i = ip.begin(); i != ip.end(); ++ i) {
         cout << *i <<".";
@@ -56,6 +61,7 @@ void printIp(vector<int> ip) {
     cout << "\n";
 }
 
+//rotina que calcula um ip com classe
 void calculateClassIP() {
 
     Address address;
@@ -129,6 +135,7 @@ void calculateClassIP() {
     }
 }
 
+//rotina que calcula um ip sem classe com mascara decimal
 void calculateClasslessIP() {
 
     string ipCode;
@@ -200,6 +207,7 @@ void calculateClasslessIP() {
     }
 }
 
+//rotina que calcula um ip com cidr
 void calculateClasslessIpWithCidr() {
 
     string ipCode;
@@ -274,7 +282,7 @@ void calculateClasslessIpWithCidr() {
 
 }
   
-
+//rotina do main que pega a opcao da funcionalidade e faz o tipo de calculo desejado.
 int main() {
 
     int option = printScreen();
