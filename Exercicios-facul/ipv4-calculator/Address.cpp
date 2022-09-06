@@ -27,23 +27,29 @@ string Address::getAddressCode() {
     return this->addressCode;
 }
 
-void Address::checkClass() {
+string Address::checkClass() {
 
     string firstItem  = * octects.begin();
 
     int firstItemInt = stoi(firstItem);
 
     if (firstItemInt <= 127) {
-        cout << "class A" << "\n";
+        return "A";
     }
 
     if (firstItemInt > 127 && firstItemInt <= 191 ) {
-        cout <<"class B" << "\n";
+        return "B";
     }
 
-    if (firstItemInt > 191) {
-        cout << "class C" << "\n";
-    }    
+    if (firstItemInt > 191 && firstItemInt <= 223) {
+        return "C";
+    }
+
+    if (firstItemInt > 223 && firstItemInt <= 239) {
+        return "D";
+    }
+
+    return "E";
 }
 
 void Address::setOctects(string octects[4]) {
@@ -67,11 +73,7 @@ int Address::getCIDR() {
         return 16;
     }
 
-    if (firstItemInt > 191) {
-        return 24;
-    }
-
-    return 0;    
+    return 24;    
 }
 
 string Address::checkMask() {
@@ -88,11 +90,7 @@ string Address::checkMask() {
         return "255.255.0.0";
     }
 
-    if (firstItemInt > 191 ) {
-        return "255.255.255.0";
-    }
-
-    return "0.0.0.0";    
+    return "255.255.255.0";
 }
 
 double Address::getNumberOfHosts(int cdr) {
@@ -175,7 +173,7 @@ int Address::getClasslessCIDR(string mask) {
 }
 
 bool Address::isValidCIDR(int cidr) {
-    return (cidr >= 8 || cidr <= 30);
+    return (cidr >= 8 && cidr <= 30);
 }
 
 string Address::getMaskByCidr(int cdr) {
