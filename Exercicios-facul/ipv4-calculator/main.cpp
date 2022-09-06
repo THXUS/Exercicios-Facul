@@ -2,7 +2,7 @@
 #include "Address.h"
 #include "Address.cpp"
 #include <vector>
-
+#include "validMasks.h"
 string octects[4];
 string maskOctects[4];
   
@@ -30,15 +30,34 @@ void split (string str, char seperator, string *arr) {
         }  
         i++;  
     }     
-}  
-  
+}
 
-int main() {
+int printScreen( ) {
+
+    int option;
+
+    cout << "THE MAGIC IP CALCULATOR OF MATHEUS GUILHERME SOUZA SANTANA" << "\n";
+    cout << "Class: Redes De Computadores II                           " << "\n";
+    cout << "\n";
+    cout << "Options:                                                  " << "\n";
+    cout << "1 - Calculate Class IP                                    " << "\n";
+    cout << "2 - Calculate Classless IP with CIDR                      " << "\n";
+    cout << "3 - Calculate Classless IP with Decimal Notation          " << "\n";
+    cout << "4 - Exit                                                  " << "\n";
+    cout << "Enter your option: ";
+    cin >> option;
+
+    return option;
+}
+
+void calculateClassIP() {
+
     Address address;
 
     string input;
-
+    
     cout<< "Type something bruh... ";
+    
     cin >> input;
 
     bool isValid = address.checkCode(input);
@@ -110,5 +129,25 @@ int main() {
     } else {
         cout << "is Invalid\n";
     }
+}
+  
+
+int main() {
+
+    int option = printScreen();
+
+    switch (option) {
+
+        case 1:
+        calculateClassIP();
+        break;
+        case 2:
+        break;
+        case 3:
+        break;
+        default:
+        cout << "BUUUUHH" << "\n";
+    }
+
     return 0;
 }
