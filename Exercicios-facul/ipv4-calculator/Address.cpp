@@ -173,3 +173,12 @@ bool Address::isValidDecimalMask(string mask) {
 int Address::getClasslessCIDR(string mask) {
     return (find(validMasks.begin(), validMasks.end(),mask) - validMasks.begin()) + 8; 
 }
+
+bool Address::isValidCIDR(int cidr) {
+    return (cidr >= 8 || cidr <= 30);
+}
+
+string Address::getMaskByCidr(int cdr) {
+    return validMasks.at(cdr - 8);
+}
+

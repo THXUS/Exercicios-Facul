@@ -34,6 +34,8 @@ class Address {
         vector<int> getLastIp(vector<int> broadcast);
         bool isValidDecimalMask(string mask);
         int getClasslessCIDR(string mask);
+        bool isValidCIDR( int cidr);
+        string getMaskByCidr( int cdr);
 };
 
 

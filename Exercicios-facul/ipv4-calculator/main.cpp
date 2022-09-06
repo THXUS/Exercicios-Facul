@@ -206,12 +206,79 @@ void calculateClasslessIP() {
     }else {
         cout << "Oopsie, sorry its invalid :(" << "\n";
     }
+}
 
+void calculateClasslessIpWithCidr() {
 
+    string ipCode;
+    
+    Address address;
 
+    cout << "Enter your ip bruh... ";
+    cin >> ipCode;
 
+    bool isValid = address.checkCode(ipCode);
 
+    if(isValid) {
 
+        Address address;
+
+        address.setAddressCode(ipCode);
+
+        int cidrInput;
+
+        cout << "Enter your cidr bruh... /";
+        cin >> cidrInput;
+
+        bool isCidrValid = address.isValidCIDR(cidrInput); 
+
+        if(isCidrValid) {
+
+            split(address.getAddressCode(), '.', octects);
+
+            address.setOctects(octects);
+
+            string mask = address.getMaskByCidr(cidrInput);
+
+            split(mask,'.',maskOctects );
+
+            address.setMask(maskOctects);
+
+            cout << "your ip Address " << address.getAddressCode() << "\n";
+
+            cout << "your decimal mask " << mask << "\n";
+
+            cout << "Your cidr is /" << cidrInput << "\n";
+
+            cout << "Your number of hosts: " << address.getNumberOfHosts(cidrInput) << "\n";
+
+            vector<int> firstAddress = address.getFirstAddress();
+
+            cout << "Your first Address is ";
+
+            printIp(firstAddress);
+
+            cout << "Your broadcast is ";
+
+            vector<int> broadcast = address.getBroadcast();
+
+            printIp(broadcast);
+
+            cout << "your first ip ";
+
+            printIp(address.getFirstIp(firstAddress));
+
+            cout << "your last ip ";
+
+            printIp(address.getLastIp(broadcast));
+
+        }else {
+            cout << "Sorry bruh its invalid" << "\n";
+        }
+
+    } else {
+        cout << "Oopsie, sorry its invalid :(" << "\n";
+    }
 
 }
   
@@ -229,6 +296,7 @@ int main() {
         calculateClasslessIP();
         break;
         case 3:
+        calculateClasslessIpWithCidr();
         break;
         default:
         cout << "BUUUUHH" << "\n";
