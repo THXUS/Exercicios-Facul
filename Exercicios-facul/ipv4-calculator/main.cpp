@@ -130,6 +130,31 @@ void calculateClassIP() {
         cout << "is Invalid\n";
     }
 }
+
+void calculateClasslessIP() {
+
+    string ipCode;
+    
+    Address address;
+
+    cout << "Enter yout ip bruh... " << "\n";
+    cin >> ipCode;
+
+    bool isValid = address.checkCode(ipCode);
+
+    if(isValid) {
+
+    }else {
+        cout << "Oopsie, sorry its invalid :(" << "\n";
+    }
+
+
+
+
+
+
+
+}
   
 
 int main() {
