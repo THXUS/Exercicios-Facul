@@ -16,7 +16,11 @@
 
 char temperature[8];
 
-float temperatura; 
+char setPointAtual[8];
+
+float temperatura;
+
+float setPoint;
 
 
 
@@ -34,7 +38,11 @@ void imprimeTemperaturaAtual() {
 
     sprintf(temperature, "%3.2f", temperatura);
 
-    imprime_lcd(temperature);   
+    imprime_lcd(temperature);
+
+    sprintf(setPointAtual, " StP %3.2f", setPoint);
+
+    imprime_lcd(setPointAtual);
 
     __delay_ms(1000);
 }
@@ -81,16 +89,26 @@ void avisaLimiteMaximo() {
     
 }
 
+void nivelarTemperaturaComSetPoint() {
+    if(temperatura < setPoint) {
+        temperatura += 1.00f;
+    }
+
+    if(temperatura > setPoint) {
+        temperatura -= 1.00f;
+    }
+}
+
 
 void checarTemperatura() {
     
     if(isTemperaturaNoLimite()) {
         
         imprimeTemperaturaAtual();
-       
+
     }else {
         
-        if (temperatura > 40) {
+        if (temperatura > 40.0) {
             avisaLimiteMaximo();
         }
         
@@ -99,31 +117,32 @@ void checarTemperatura() {
             avisaLimiteMinimo();
           
         }
+
+        setPoint = 35.0;
         
-         temperatura = 30.0;
      
     }
     
-  
     TMR0L = 5; 
 
-    INTCONbits.TMR0IF = 0; 
-    
+    INTCONbits.TMR0IF = 0;
+
+    nivelarTemperaturaComSetPoint(); 
 }
     
    
-void aumentarTemperatura() {
+void aumentarTemperaturaDesejada() {
     
     INTCON3bits.INT1IF = 0;
     
-    temperatura += 0.5f;
+    setPoint += 1.0f;
     
 }
 
-void diminuirTemperatura() {
+void diminuirTemperaturaDesejada() {
     INTCONbits.INT0IF = 0;
     
-    temperatura -= 0.5f;
+    setPoint -= 1.0f;
 }
 
 
@@ -136,11 +155,11 @@ void __interrupt() isr(void) {
     
     
     if(INTCON3bits.INT1IF) {
-        aumentarTemperatura();
+        aumentarTemperaturaDesejada();
     }
     
     if(INTCONbits.INT0IF) {
-        diminuirTemperatura();
+        diminuirTemperaturaDesejada();
     }
      
 }
@@ -174,6 +193,8 @@ int main() {
 
     
     temperatura = 30.0;
+
+    setPoint = 35.00;
     
     PORTAbits.RA4 = 0; 
 
