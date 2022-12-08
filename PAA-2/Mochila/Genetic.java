@@ -157,7 +157,7 @@ public class Genetic {
         
         Integer i = 0;
         
-        for (final Integer individuo : populacao.get(populacao.size() - 1)) {
+        for (final Integer individuo : populacao.get(0)) {
             
             if (individuo.equals(1)) {
                 
@@ -169,14 +169,16 @@ public class Genetic {
         }
         
         BigDecimal valorTotal = BigDecimal.ZERO;
+        BigDecimal pesoTotal = BigDecimal.ZERO;
         for (final Integer indice : itensSelecionados) {
-            System.out.println(pesosEValores.get(indice).getDescricao() + " " + "Valor R$" + pesosEValores.get(indice).getValor().toString());
+            System.out.println(pesosEValores.get(indice).getDescricao() + " " + "Valor R$" + pesosEValores.get(indice).getValor() + " Peso " +
+                    pesosEValores.get(indice).getPeso());
             valorTotal = valorTotal.add(pesosEValores.get(indice).getValor());
-            
+            pesoTotal = pesoTotal.add(pesosEValores.get(indice).getPeso());
         }
         
-        System.out.println("Lucro Total: " + "R$" + valorTotal);
-        
+        System.out.println("Valor Total: " + "R$" + valorTotal);
+        System.out.println("Peso Total: " + pesoTotal);
     }
     
 }
