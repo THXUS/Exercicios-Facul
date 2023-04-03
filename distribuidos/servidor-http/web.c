@@ -6,17 +6,18 @@
 #include <netinet/in.h>
 #include <string.h>
 
-#define PORT 33333
+#define PORT 33331
+
+#define TAMANHO_LIMITE_PARAMETRO 100
+
+#define BYTES_INICIAL_RESPOSTA 58 * sizeof(char)
+
 int main(int argc, char const *argv[])
 {
     int server_fd, new_socket; long valread;
     struct sockaddr_in address;
     int addrlen = sizeof(address);
-
-    char resposta[5];
-    char chr;
-    
-    char *hello = "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 15\n\nAULA DE CMP1190";
+    char tamanho_da_resposta[3];
   
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
     {
@@ -53,40 +54,68 @@ int main(int argc, char const *argv[])
         
         char buffer[30000] = {0};
         valread = read( new_socket , buffer, 30000);
+        
         printf("%s\n",buffer);
 
+        char *char_aux = malloc(sizeof(char));
+            
+        char *cabecalho_da_resposta = malloc(BYTES_INICIAL_RESPOSTA);
 
-        char uri[10];
+        char *parametro =  malloc(100 * sizeof(char));
 
-        for (int i = 0; i < 5; i++) {
-            uri[i] = buffer[5+i];
+        
+        for (int i = 0; i < TAMANHO_LIMITE_PARAMETRO; i++) 
+        {
+            if(buffer[5+i] == ' ' || i >= TAMANHO_LIMITE_PARAMETRO) break;
+            *char_aux = buffer[5+i];
+            strcat(parametro, char_aux);
         }
 
-         // criando a variável ponteiro para o arquivo
+        //  criando a variável ponteiro para o arquivo
         FILE *pont_arq;
         
           //abrindo o arquivo
-        pont_arq = fopen(uri, "a");
+        pont_arq = fopen(&parametro[0], "a+");
 
-        for (int i = 0; i < 5; i++) {
-            fputc(uri[i], pont_arq);
-        }
+        fputs(parametro, pont_arq);
 
-        int indiceResposta = 0;
+        fseek(pont_arq, 0, SEEK_END);
 
-        do {
-            chr = fgetc(pont_arq);
-            resposta[indiceResposta] = chr;
-        } while(chr != EOF);
+        int tamanho = ftell(pont_arq);
+
+        rewind(pont_arq);
+
+        char *resposta = malloc(sizeof(char) * (tamanho + 1));
+
+        fread(resposta, sizeof(char), tamanho, pont_arq);
+
+        resposta[tamanho] = '\0';
 
         fclose(pont_arq);
 
-        printf("TESTEEE %s\n", resposta);
+        strcpy(cabecalho_da_resposta, "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: ");
 
-        //TODO fazer a parte do anexo
-        write(new_socket , hello , strlen(hello));
+        sprintf(tamanho_da_resposta, "%ld", strlen(resposta));
+
+        strcat(tamanho_da_resposta, "\n");
+
+        cabecalho_da_resposta = realloc(cabecalho_da_resposta, BYTES_INICIAL_RESPOSTA +  3 + strlen(resposta) * sizeof(char));
+
+
+        strcat(cabecalho_da_resposta, tamanho_da_resposta);
+
+        strcat(cabecalho_da_resposta, "\n");
+        //TODO VERIFICAR PQ O TEXTO QUEBRA DPS DO PRIMEIRO ENVIO
+        strcat(cabecalho_da_resposta, resposta);
+
+        printf("Cabecalho de Resposta: %s\n", cabecalho_da_resposta);
+
+        write(new_socket , cabecalho_da_resposta , strlen(cabecalho_da_resposta));
         printf("Resposta Enviada");
         close(new_socket);
+        free(cabecalho_da_resposta);
+        free(resposta);
+        free(parametro);
     }
     return 0;
 }
