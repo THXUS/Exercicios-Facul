@@ -6,7 +6,7 @@
 #include <netinet/in.h>
 #include <string.h>
 
-#define PORT 33331
+#define PORT 33333
 
 #define TAMANHO_LIMITE_PARAMETRO 100
 
@@ -61,15 +61,16 @@ int main(int argc, char const *argv[])
             
         char *cabecalho_da_resposta = malloc(BYTES_INICIAL_RESPOSTA);
 
-        char *parametro =  malloc(100 * sizeof(char));
+        char parametro[TAMANHO_LIMITE_PARAMETRO];
 
-        
+        //parser
         for (int i = 0; i < TAMANHO_LIMITE_PARAMETRO; i++) 
         {
             if(buffer[5+i] == ' ' || i >= TAMANHO_LIMITE_PARAMETRO) break;
-            *char_aux = buffer[5+i];
-            strcat(parametro, char_aux);
+            parametro[i] = buffer[5+i];
         }
+
+        printf("PARAMETRO %s\n", parametro);
 
         //  criando a variável ponteiro para o arquivo
         FILE *pont_arq;
@@ -99,23 +100,21 @@ int main(int argc, char const *argv[])
 
         strcat(tamanho_da_resposta, "\n");
 
-        cabecalho_da_resposta = realloc(cabecalho_da_resposta, BYTES_INICIAL_RESPOSTA +  3 + strlen(resposta) * sizeof(char));
+        cabecalho_da_resposta = realloc(cabecalho_da_resposta, BYTES_INICIAL_RESPOSTA +  5 + strlen(resposta) * sizeof(char));
 
 
         strcat(cabecalho_da_resposta, tamanho_da_resposta);
 
         strcat(cabecalho_da_resposta, "\n");
-        //TODO VERIFICAR PQ O TEXTO QUEBRA DPS DO PRIMEIRO ENVIO
+        
         strcat(cabecalho_da_resposta, resposta);
 
         printf("Cabecalho de Resposta: %s\n", cabecalho_da_resposta);
 
         write(new_socket , cabecalho_da_resposta , strlen(cabecalho_da_resposta));
         printf("Resposta Enviada");
-        close(new_socket);
         free(cabecalho_da_resposta);
-        free(resposta);
-        free(parametro);
+        close(new_socket);
     }
     return 0;
 }
