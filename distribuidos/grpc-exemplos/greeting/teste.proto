@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+service RouteGuide {
+  rpc getGreet(EmptyParams) returns (Greeting) {}
+}
+
+
+message EmptyParams {}
+
+message Greeting {
+  // The name of the feature.
+  string message = 1;
+}
